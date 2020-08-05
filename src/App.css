@@ -13,7 +13,7 @@
   }
 }
 
-.App-header {
+.App {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -49,4 +49,17 @@ th{
 
 td{
   background-color: salmon;
+}
+
+ form{ 
+  background-color: darkslategrey;
+  border: 1pt solid black;
+} 
+
+form div{
+  margin-bottom: 10px;
+}
+
+div label{
+  margin-right: 30px;
 }

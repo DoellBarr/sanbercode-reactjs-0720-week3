@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-class Timer extends Component{
+class Jam extends Component{
   constructor(props){
     super(props)
       // let hari = new Date().toLocaleString(),
@@ -12,20 +12,6 @@ class Timer extends Component{
     }
   }
 
-  componentDidMount(){
-    if (this.props.start !== undefined){
-      this.setState({time: this.props.start})
-    }
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    );
-  }
-
-  componentWillUnmount(){
-    clearInterval(this.timerID);
-  }
-
   currentTime()
   {
     this.setState({
@@ -33,25 +19,18 @@ class Timer extends Component{
     })
   }
 
-    componentWillMount(){
+  componentDidMount(){
       setInterval(()=>this.currentTime(), 1000)
     }
 
-
-
-  tick() {
-    this.setState({
-      time: this.state.time - 1
-    });
-  }
 
   render(){
     return(
       <>
       {
-        this.state.time >= 0 &&
+        
         <h1 style={{textAlign: "center"}}>
-          sekarang jam : {this.state.clock.toLocaleTimeString()} hitung mundur : {this.state.time}
+           {this.state.clock.toLocaleTimeString()} 
         </h1>
       }
       </>
@@ -59,4 +38,4 @@ class Timer extends Component{
   }
 }
 
-export default Timer
+export default Jam
