@@ -11,7 +11,7 @@ function App() {
       {/*Tugas 11*/}
       {/*<Table />*/}
       {/*Tugas 12*/}
-      <Jam />
+      <Jam start = "100"/>
       {/*Tugas 13*/}
       <Lists />
     </div>

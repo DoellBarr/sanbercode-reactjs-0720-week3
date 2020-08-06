@@ -1,40 +1,92 @@
 import React, { Component } from 'react';
 
+
+
 class Lists extends Component{
 
   constructor(props){
     super(props)
-    this.state ={
-      dataHargaBuah : [
-        {nama: "Semangka", harga: 10000, berat: 1000},
-        {nama: "Anggur", harga: 40000, berat: 500},
-        {nama: "Strawberry", harga: 30000, berat: 400},
-        {nama: "Jeruk", harga: 30000, berat: 1000},
-        {nama: "Mangga", harga: 30000, berat: 500}
-      ],
-     inputNama : "",
-     inputHarga : "",
-     inputBerat : ""
+    this.state = {
+     dataHargaBuah : [
+      {nama: "Semangka", harga: 10000, berat: 1000},
+      {nama: "Anggur", harga: 40000, berat: 500},
+      {nama: "Strawberry", harga: 30000, berat: 400},
+      {nama: "Jeruk", harga: 30000, berat: 1000},
+      {nama: "Mangga", harga: 30000, berat: 500}
+    ],
+     input: {
+      nama: "",
+      harga: "",
+      berat: ""
+    },
+     indexOfForm : -1
     }
-
+  
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
+  handleDelete(event){
+    let index = event.target.value
+    let dataBuah = this.state.dataHargaBuah
+    let dataBuahEdit = dataBuah[this.state.indexOfForm]
+    dataBuah.splice(index, 1)
+
+    if(dataBuahEdit !== undefined){
+      const newIndex = dataBuah.findIndex((el) => el === dataBuahEdit)
+      this.setState({
+        dataHargaBuah: dataBuah, 
+        indexOfForm: newIndex
+      })
+    }else{
+      this.setState({
+        dataHargaBuah: dataBuah
+      })
+    }
+  }
+
+  handleEdit(event){
+    let index = event.target.value
+    let dataBuah = this.state.dataHargaBuah[index]
+   this.setState({
+     input:{
+       nama: dataBuah.nama,
+       harga: dataBuah.harga,
+       berat: dataBuah.berat,
+     },
+     indexOfForm: index,
+  })
+}
+
+
   handleChange(event){
+    let input = {...this.state.input};
+    input[event.target.name] = event.target.value;
     this.setState({
-    [event.target.name]: event.target.value,
+    input
   })
 }
 
   handleSubmit(event){
     event.preventDefault()
-    this.setState({
-      dataHargaBuah: [...this.state.dataHargaBuah, {nama: this.state.inputNama, harga: this.state.inputHarga,  berat: this.state.inputBerat}],
-      inputNama: "",
-      inputHarga: "",
-      inputBerat: ""
-    })
+    let input = this.state.input
+    if(input['nama'].replace(/\s/g, '') !== "" && input['harga'].replace(/\s/g, '') !== "" && input['berat'].replace(/\s/g, '') !== ""){
+      let index = this.state.indexOfForm
+      let buahData = this.state.dataHargaBuah
+      if (index === -1){
+        buahData = [...buahData, input]
+      }else{
+        buahData[index] = input
+      }
+      this.setState({
+        dataHargaBuah: buahData,
+        inputNama: "",
+        inputHarga: "",
+        inputBerat: ""
+      })
+    }
   };
 
   render(){
@@ -44,19 +96,26 @@ class Lists extends Component{
         <table>
           <thead>
             <tr>
+              <th>Nomor</th>
               <th>Nama</th>
               <th>Harga</th>
               <th>Berat</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
               {
-                this.state.dataHargaBuah.map(val=>{
+                this.state.dataHargaBuah.map((val, index)=>{
                   return(
-                    <tr>
+                    <tr key = {index}>
+                      <td>{index+1}</td>
                       <td>{val.nama}</td>
                       <td>{val.harga}</td>
                       <td>{val.berat/1000} kg</td>
+                      <td>
+                        <button value = {index} name="edit" onClick={this.handleEdit}>Edit</button>
+                        <button value = {index} name = "edit" onClick = {this.handleDelete}>Delete</button>
+                        </td>
                     </tr>
                   )
                 })
@@ -70,13 +129,13 @@ class Lists extends Component{
             <label>
               Masukkan nama buah:
             </label>          
-              <input value={this.state.inputNama} name="inputNama" onChange={this.handleChange}/>
+              <input type = "text" value={this.state.inputNama} name='inputNama'onChange={this.handleChange}/>
           </div>
           <div>
             <label>
               Masukkan harga buah:    
             </label>          
-              <input type = "number" value={this.state.inputHarga} name="inputHarga" onChange={this.handleChange}/>
+              <input type = "number" value={this.state.inputHarga} name='inputHarga' onChange={this.handleChange}/>
           </div>
           <div>
             <label>
