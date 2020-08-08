@@ -5,7 +5,8 @@ import './App.css';
 // import Lists from './tugas13/List CRUD.js'
 // import Jam from './tugas13/jam'
 import Jam from './tugas14/jam'
-import Tugas14 from './tugas14/tugas14.js'
+// import Tugas14 from './tugas14/tugas14.js'
+import Tugas15 from './tugas15/tugas15.js'
 
 function App() {
   return (
@@ -18,7 +19,11 @@ function App() {
       {/*<Lists />*/}
 
       {/*Tugas 14*/}
-      <Tugas14/>
+      {/*<Tugas14/>*/}
+
+      {/*Tugas15*/}
+      <Tugas15/>
+
     </div>
 
   );
